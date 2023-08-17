@@ -1,6 +1,7 @@
-package com.example.demo
+package org.example
 
-object TestHello {
+
+object App {
   def main(args: Array[String]): Unit = {
     println("hello spark");
   }
