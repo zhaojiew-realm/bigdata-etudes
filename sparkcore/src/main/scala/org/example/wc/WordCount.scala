@@ -6,14 +6,14 @@ import org.apache.spark.{SparkConf, SparkContext}
 object WordCount {
   def main(args: Array[String]): Unit = {
     val sparkConf = new SparkConf()
-      .setMaster("spark://master:7077")
-//      .setMaster("local")
+//      .setMaster("spark://spark-master:7077")
+      .setMaster("local[*]")
       .setAppName("WordCount")
 
     val sc: SparkContext = new SparkContext(sparkConf)
     // 指定hdfs路径使用8020端口（IPC通信端口），其中hadoop的配置文件同样会影响spark任务获取数据的路径
-    val fileRDD: RDD[String] = sc.textFile("hdfs://master:8020/wcinput/word.txt")
-    // val fileRDD: RDD[String] = sc.textFile("input.tmp")
+//    val fileRDD: RDD[String] = sc.textFile("hdfs://master:8020/wcinput/word.txt")
+     val fileRDD: RDD[String] = sc.textFile("hdfs://namenode:9000/data/input")
 
     // 下面是简化版写法file://input.tmp
     // val wordsRDD = inputRDD.flatMap(line => line.split("\\s+"))

@@ -5,7 +5,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 object MapRDD {
   def main(args: Array[String]): Unit = {
-    val sparkconf = new SparkConf().setMaster("local[*]").setAppName("maprdd")
+    val sparkconf = new SparkConf().setMaster("spark://spark-master:7077").setAppName("maprdd")
     val sc = new SparkContext(sparkconf)
     val seq = Seq[Int](1, 2, 3, 4)
     val rdd: RDD[Int] = sc.makeRDD(seq, 2)
@@ -19,12 +19,13 @@ object MapRDD {
     })
     rdd2.collect().foreach(println)
 
-    val dataRDD = sc.makeRDD(List(
-      List(1, 2), List(3, 4)
-    ), 1)
-    val dataRDD1 = dataRDD.flatMap(
-      list => list
-    )
-    dataRDD1.collect().foreach(println)
+//    val dataRDD = sc.makeRDD(List(
+//      List(1, 2), List(3, 4)
+//    ), 1)
+//    val dataRDD1 = dataRDD.flatMap(
+//      list => list
+//    )
+//    dataRDD1.collect().foreach(println)
+    sc.stop()
   }
 }

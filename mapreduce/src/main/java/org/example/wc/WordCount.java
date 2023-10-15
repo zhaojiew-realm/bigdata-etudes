@@ -37,14 +37,14 @@ public class WordCount {
         job.setOutputValueClass(IntWritable.class);
 
         //本地路径
-        // FileInputFormat.setInputPaths(job, new Path("input.tmp"));
-        // FileOutputFormat.setOutputPath(job, new Path("output"));
+         FileInputFormat.setInputPaths(job, new Path("/data/input"));
+         FileOutputFormat.setOutputPath(job, new Path("/data/output"));
         //打包jar集群路径
         // FileInputFormat.setInputPaths(job, new Path(args[0]));
         // FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
-        FileInputFormat.setInputPaths(job, new Path("/wcinput/word.txt"));
-        FileOutputFormat.setOutputPath(job, new Path("/wcoutput12/"));
+//        FileInputFormat.setInputPaths(job, new Path("/wcinput/word.txt"));
+//        FileOutputFormat.setOutputPath(job, new Path("/wcoutput12/"));
 
         //提交job
         boolean result = job.waitForCompletion(true);
