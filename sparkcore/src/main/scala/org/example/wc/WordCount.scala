@@ -6,14 +6,17 @@ import org.apache.spark.{SparkConf, SparkContext}
 object WordCount {
   def main(args: Array[String]): Unit = {
     val sparkConf = new SparkConf()
-//      .setMaster("spark://spark-master:7077")
-      .setMaster("local[*]")
+      .set("spark.master","spark://172.31.81.1:7077")
+//      .setMaster("local[*]")
+      // error: java.lang.ClassCastException: cannot assign instance of java.lang.invoke.SerializedLambda to field
+      // https://blog.csdn.net/hotdust/article/details/61671448
+      .set("spark.jars","/home/ubuntu/IdeaProjects/bigdata-etudes/sparkcore/target/sparkcore-1.0.0.jar")
       .setAppName("WordCount")
 
     val sc: SparkContext = new SparkContext(sparkConf)
     // 指定hdfs路径使用8020端口（IPC通信端口），其中hadoop的配置文件同样会影响spark任务获取数据的路径
 //    val fileRDD: RDD[String] = sc.textFile("hdfs://master:8020/wcinput/word.txt")
-     val fileRDD: RDD[String] = sc.textFile("hdfs://namenode:9000/data/input")
+     val fileRDD: RDD[String] = sc.textFile("hdfs://172.31.81.1:8020/data/wcinput")
 
     // 下面是简化版写法file://input.tmp
     // val wordsRDD = inputRDD.flatMap(line => line.split("\\s+"))
