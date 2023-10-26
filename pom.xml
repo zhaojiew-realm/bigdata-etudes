@@ -10,6 +10,8 @@
     <modules>
         <module>mapreduce</module>
         <module>sparkcore</module>
+        <module>flinkall</module>
+        <module>mockdata</module>
     </modules>
 
 

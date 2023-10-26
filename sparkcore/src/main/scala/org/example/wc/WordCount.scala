@@ -8,8 +8,10 @@ object WordCount {
     val sparkConf = new SparkConf()
       .set("spark.master","spark://172.31.81.1:7077")
 //      .setMaster("local[*]")
+
       // error: java.lang.ClassCastException: cannot assign instance of java.lang.invoke.SerializedLambda to field
       // https://blog.csdn.net/hotdust/article/details/61671448
+      // in addition, we need to repackage ensure use new configuration
       .set("spark.jars","/home/ubuntu/IdeaProjects/bigdata-etudes/sparkcore/target/sparkcore-1.0.0.jar")
       .setAppName("WordCount")
 

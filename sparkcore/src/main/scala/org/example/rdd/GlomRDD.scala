@@ -11,7 +11,6 @@ object GlomRDD {
     val glomRDD: RDD[Array[Int]] = dataRDD.glom()
     glomRDD.collect().foreach(data => println(data.mkString(",")))
 
-
     //max 1, 2, 3, 4
     // (1,2) (3,4)
     // (2,4) sum
