@@ -1,5 +1,9 @@
-
 ## spark
+
+material
+
+- https://www.cnblogs.com/30go/p/16376826.html
+- https://zhenchao125.github.io/
 
 book
 
@@ -9,5 +13,6 @@ book
 notebook
 
 - spark3.0, https://www.bilibili.com/video/BV11A411L7CK
-- 海牛大数据】Spark 教程, http://www.hainiubl.com/topics/76305
+- 海牛大数据Spark 教程, http://www.hainiubl.com/topics/76305
 - StructuredStreaming 教程, http://www.hainiubl.com/topics/76348
+

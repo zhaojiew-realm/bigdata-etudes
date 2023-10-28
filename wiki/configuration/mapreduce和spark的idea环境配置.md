@@ -16,7 +16,7 @@ idea配置
 
 [client提交任务的方式](https://blog.csdn.net/liujun122/article/details/106151618)
 
-- 在本地通过hadoop-client，使用localjobrunner运行任务
+- 在本地通过hadoop-client，使用local job runner运行任务
 - 在ide中将应用打包为uber jar，拷贝到hadoop集群中，使用hadoop命令运行
 - 在ide中配置远程hdfs和yarn地址，自动远程提交job
 
@@ -37,7 +37,7 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: org/example/w
 
 出现以下错误
 
-(1)[Hadoop异常解决：Unable to load native-hadoop library](https://www.cnblogs.com/maxstack/p/13901201.html)
+> [Hadoop异常解决：Unable to load native-hadoop library](https://www.cnblogs.com/maxstack/p/13901201.html)
 
 ```
 Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
@@ -61,6 +61,6 @@ spark客户端配置
 
 - hadoop配置文件同样会影响spark应用获取数据的路径，即使将运行模式调整为local也不影响（运行环境和数据路径没有相关性）
 
-(1) Spark分区win10下ideaExitCodeException exitCode=-1073741515 异常
+> Spark分区win10下ideaExitCodeException exitCode=-1073741515 异常
 
 原因：操作系统缺少dll文件，需要安装c++的msvc依赖，https://blog.csdn.net/qq_49472679/article/details/119110003
