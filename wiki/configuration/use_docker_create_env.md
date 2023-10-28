@@ -16,7 +16,7 @@ docker run --detach --volume=/var/run/docker.sock:/var/run/docker.sock -p 8888:8
 version: "3"
 services:
   namenode:
-    image: 037047667284.dkr.ecr.cn-north-1.amazonaws.com.cn/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/hadoop-namenode:2.0.0-hadoop3.2.1-java8
     container_name: namenode
     restart: always
     ports:
@@ -30,7 +30,7 @@ services:
       - ./hadoop.env
 
   datanode:
-    image: 037047667284.dkr.ecr.cn-north-1.amazonaws.com.cn/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/hadoop-datanode:2.0.0-hadoop3.2.1-java8
     container_name: datanode1
     restart: always
     volumes:
@@ -43,7 +43,7 @@ services:
       - ./hadoop.env
 
   datanode2:
-    image: 037047667284.dkr.ecr.cn-north-1.amazonaws.com.cn/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/hadoop-datanode:2.0.0-hadoop3.2.1-java8
     container_name: datanode2
     restart: always
     volumes:
@@ -56,7 +56,7 @@ services:
       - ./hadoop.env
 
   resourcemanager:
-    image: 037047667284.dkr.ecr.cn-north-1.amazonaws.com.cn/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
     container_name: resourcemanager
     restart: always
     environment:
@@ -74,7 +74,7 @@ services:
       - ./hadoop.env
 
   nodemanager1:
-    image: 037047667284.dkr.ecr.cn-north-1.amazonaws.com.cn/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
     container_name: nodemanager
     restart: always
     environment:
@@ -85,7 +85,7 @@ services:
       - ./hadoop.env
 
   historyserver:
-    image: 037047667284.dkr.ecr.cn-north-1.amazonaws.com.cn/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
     container_name: historyserver
     restart: always
     environment:
@@ -98,7 +98,7 @@ services:
       - ./hadoop.env
 
   spark-master:
-    image: 037047667284.dkr.ecr.cn-north-1.amazonaws.com.cn/spark-master:3.2.0-hadoop3.2
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/spark-master:3.2.0-hadoop3.2
     container_name: spark-master
     ports:
       - "8088:8080"
@@ -115,7 +115,7 @@ services:
     environment:
       - "SPARK_MASTER=spark://spark-master:7077"
   spark-worker-2:
-    image: 037047667284.dkr.ecr.cn-north-1.amazonaws.com.cn/spark-worker:3.2.0-hadoop3.2
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/spark-worker:3.2.0-hadoop3.2
     container_name: spark-worker-2
     depends_on:
       - spark-master
@@ -124,7 +124,7 @@ services:
     environment:
       - "SPARK_MASTER=spark://spark-master:7077"
   spark-history-server:
-      image: 037047667284.dkr.ecr.cn-north-1.amazonaws.com.cn/spark-history-server:3.2.0-hadoop3.2
+      image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/spark-history-server:3.2.0-hadoop3.2
       container_name: spark-history-server
       depends_on:
         - spark-master
@@ -134,7 +134,7 @@ services:
         - /tmp/spark-events-local:/tmp/spark-events
 
   zeppelin:
-    image: 037047667284.dkr.ecr.cn-north-1.amazonaws.com.cn/zeppelin:0.8.0-hadoop-2.8.0-spark-2.3.1
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/zeppelin:0.8.0-hadoop-2.8.0-spark-2.3.1
     ports:
       - 8078:8080
     volumes:
@@ -146,7 +146,7 @@ services:
       - ./hadoop.env
 
   hive-server:
-    image: 037047667284.dkr.ecr.cn-north-1.amazonaws.com.cn/hive:2.3.2-postgresql-metastore
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/hive:2.3.2-postgresql-metastore
     env_file:
       - ./hadoop.env
     environment:
@@ -155,7 +155,7 @@ services:
     ports:
       - "10000:10000"
   hive-metastore:
-    image: 037047667284.dkr.ecr.cn-north-1.amazonaws.com.cn/hive:2.3.2-postgresql-metastore
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/hive:2.3.2-postgresql-metastore
     env_file:
       - ./hadoop.env
     command: /opt/hive/bin/hive --service metastore
@@ -164,7 +164,7 @@ services:
     ports:
       - "9083:9083"
   hive-metastore-postgresql:
-    image: 037047667284.dkr.ecr.cn-north-1.amazonaws.com.cn/hive-metastore-postgresql:2.3.0
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/hive-metastore-postgresql:2.3.0
 
 volumes:
   hadoop_namenode:
@@ -355,7 +355,7 @@ services:
         - /tmp/spark-events-local:/tmp/spark-events
  
   zeppelin:
-    image: 037047667284.dkr.ecr.cn-north-1.amazonaws.com.cn/zeppelin:0.8.0-hadoop-2.8.0-spark-2.3.1
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/zeppelin:0.8.0-hadoop-2.8.0-spark-2.3.1
     ports:
       - 8078:8080
     volumes:
@@ -490,4 +490,106 @@ for word, count in word_count_rdd.collect():
 spark-submit --master spark://172.21.0.2:7077 main.py
 
 spark-submit main.py
+```
+
+
+## hive 
+
+```yaml
+version: "3"
+
+services:
+  namenode:
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    container_name: namenode
+    volumes:
+      - hadoop_namenode:/hadoop/dfs/name
+    environment:
+      - CLUSTER_NAME=test
+    env_file:
+      - ./hadoop.env
+    ports:
+      - 9870:9870
+      - 9000:9000 
+
+  datanode:
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: datanode
+    volumes:
+      - hadoop_datanode:/hadoop/dfs/data
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870"
+    env_file:
+      - ./hadoop.env
+    ports:
+      - 9864:9864
+
+  resourcemanager:
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
+    container_name: resourcemanager
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870 datanode:9864"
+    env_file:
+      - ./hadoop.env
+    ports:
+      - 8088:8088
+
+  nodemanager1:
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
+    container_name: nodemanager
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870 datanode:9864 resourcemanager:8088"
+    env_file:
+      - ./hadoop.env
+    ports:
+      - 8042:8042
+
+  historyserver:
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
+    container_name: historyserver
+    volumes:
+      - hadoop_historyserver:/hadoop/yarn/timeline
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870 datanode:9864 resourcemanager:8088"
+    env_file:
+      - ./hadoop.env
+    ports:
+      - 8188:8188
+
+  zoo:
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/zookeeper:3.4.10
+    container_name: zoo
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888
+    ports:
+      - 2181:2181
+
+  hbase-master:
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/hbase-master:1.0.0-hbase1.2.6
+    container_name: hbase-master
+    hostname: hbase-master
+    env_file:
+      - ./hbase-distributed-local.env
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870 datanode:9864 zoo:2181"
+    ports:
+      - 16010:16010
+
+  hbase-region:
+    image: xxxxxxxxx.dkr.ecr.cn-north-1.amazonaws.com.cn/hbase-regionserver:1.0.0-hbase1.2.6
+    container_name: hbase-regionserver
+    hostname: hbase-regionserver
+    env_file:
+      - ./hbase-distributed-local.env
+    environment:
+      HBASE_CONF_hbase_regionserver_hostname: hbase-region
+      SERVICE_PRECONDITION: "namenode:9870 datanode:9864 zoo:2181 hbase-master:16010"
+    ports:
+      - 16030:16030
+
+volumes:
+  hadoop_namenode:
+  hadoop_datanode:
+  hadoop_historyserver:
 ```
