@@ -40,3 +40,5 @@ build/
 tmp
 venv
 data
+
+sync_node.sh
