@@ -12,6 +12,7 @@
         <module>sparkcore</module>
         <module>flinkall</module>
         <module>mockdata</module>
+        <module>hbase</module>
     </modules>
 
 

@@ -3,10 +3,6 @@ package org.example.ml
 import org.apache.spark.SparkConf
 import org.apache.spark.ml.feature.Tokenizer
 import org.apache.spark.sql.SparkSession
-
-
-
-
 object Demo {
   def main(args: Array[String]): Unit = {
     val sparkConf = new SparkConf().setMaster("local[*]").setAppName("ml")

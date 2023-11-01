@@ -1,0 +1,120 @@
+## Spark Streaming
+
+Spark Streaming用时间片拆分了无限的数据流，然后对每一个数据片用类似于批处理的方法进行处理，输出的数据也是一块一块的。
+
+Spark Streaming提供一个对于流数据的抽象DStream。DStream可以由来自Apache Kafka、Flume或者HDFS的流数据生成，也可以由别的DStream经过各种转换操作得来。底层DStream也是由很多个序列化的RDD构成，按时间片（比如一秒）切分成的每个数据单位都是一个RDD
+
+Spark核心引擎将对DStream的Transformation操作变为针对Spark中对 RDD的Transformation操作，将RDD经过操作变成中间结果保存在内存中。之前的DataFrame和DataSet也是同样基于RDD，所以说RDD是Spark最基本的数据抽象。就像Java里的基本数据类型（Primitive Type）一样，所有的数据都可以用基本数据类型描述。
+
+无论是DataFrame，还是DStream，都具有RDD的不可变性、分区性和容错性等特质。
+
+```scala
+sc = SparkContext(master, appName)
+ssc = StreamingContext(sc, 1)
+lines = sc.socketTextStream("localhost", 9999)
+words = lines.flatMap(lambda line: line.split(" "))
+```
+
+此外，DStream还有一些特有操作，如滑动窗口操作。StreamingContext中最重要的参数是批处理的时间间隔，即把流数据细分成数据块的粒度。这个时间间隔决定了流处理的延迟性，所以需要根据需求和资源来权衡间隔的长度。
+
+滑动窗口操作有两个基本参数：
+
+- 窗口长度（window length）：每次统计的数据的时间跨度，在例子中是60秒；
+- 滑动间隔（sliding interval）：每次统计的时间间隔，在例子中是10秒。
+
+由于Spark Streaming流处理的最小时间单位就是StreamingContext的时间间隔，所以这两个参数一定是它的整数倍。最基本的滑动窗口操作是window，它可以返回一个新的DStream，这个DStream中每个RDD代表一段时间窗口内的数据，
+
+```
+windowed_words = words.window(60, 10)
+```
+
+windowed_words代表的就是热词统计例子中我们所需的DStream，即它里边每一个数据块都包含过去60秒内的词语，而且这样的块每10秒钟就会生成一个。此外，Spark Streaming还支持一些“进阶”窗口操作。如countByWindow、reduceByWindow、reduceByKeyAndWindow和countByValueAndWindow
+
+Spark Streaming的优点很明显，由于它的底层是基于RDD实现的，所以RDD的优良特性在它这里都有体现。比如，数据容错性，如果RDD 的某些分区丢失了，可以通过依赖信息重新计算恢复。再比如运行速度，DStream同样也能通过persist()方法将数据流存放在内存中。这样做的好处是遇到需要多次迭代计算的程序时，速度优势十分明显。而且，Spark Streaming是Spark生态的一部分。所以，它可以和Spark的核心引擎、Spark SQL、MLlib等无缝衔接。
+
+换句话说，对实时处理出来的中间数据，我们可以立即在程序中无缝进行批处理、交互式查询等操作。这个特点大大增强了Spark Streaming的优势和功能，使得基于Spark Streaming的应用程序很容易扩展。而Spark Streaming的主要缺点是实时计算延迟较高，一般在秒的级别。这是由于Spark Streaming不支持太小的批处理的时间间隔。无疑Spark Streaming是一个准实时系统。别的流处理框架，如Storm的延迟性就好很多，可以做到毫秒级。
+
+## spark struct streaming
+
+Spark中的流处理库Spark Streaming。它将无边界的流数据抽象成DStream，按特定的时间间隔，把数据流分割成一个个RDD进行批处理。所以，DStream API与RDD API高度相似，也拥有RDD的各种性质。
+
+- DataFrame 是<strong>高级API</strong>，提供类似于<strong>SQL</strong>的query接口，方便熟悉关系型数据库的开发人员使用；
+- <strong>Spark SQL执行引擎会自动优化DataFrame程序</strong>，而用RDD API开发的程序本质上需要工程师自己构造RDD的DAG执行图，所以依赖于工程师自己去优化。
+
+如果可以拥有一个基于DataFrame API的流处理模块，就不需要去用相对low level的DStream API去处理无边界数据，这样会大大提升我们的开发效率。2016年，Spark在其2.0版本中推出了结构化流数据处理的模块Structured Streaming。
+
+Structured Streaming是基于Spark SQL引擎实现的，依靠Structured Streaming，在开发者眼里，流数据和静态数据没有区别。我们完全可以像批处理静态数据那样去处理流数据。随着流数据的持续输入，Spark SQL引擎会帮助我们持续地处理新数据，并且更新计算结果。
+
+与Spark Streaming类似，Structured Streaming也是将输入的数据流按照时间间隔（以一秒为例）划分成数据段。每一秒都会把新输入的数据添加到表中，Spark也会每秒更新输出结果。输出结果也是表的形式，输出表可以写入硬盘或者HDFS。
+
+这里我要介绍一下Structured Streaming的三种输出模式。
+
+- **完全模式（Complete Mode）：整个更新过的输出表都被写入外部存储；**
+- **附加模式（Append Mode）：上一次触发之后新增加的行才会被写入外部存储。如果老数据有改动则不适合这个模式；**
+- **更新模式（Update Mode）：上一次触发之后被更新的行才会被写入外部存储。**
+
+需要注意的是，Structured Streaming并不会完全存储输入数据。每个时间间隔它都会读取最新的输入，进行处理，更新输出表，然后把这次的输入删除。Structured Streaming只会存储更新输出表所需要的信息。
+
+Structured Streaming的模型在根据事件时间（Event Time）处理数据时十分方便。
+
+## Streaming DataFrame API
+
+在Structured Streaming发布以后，DataFrame既可以代表静态的有边界数据，也可以代表无边界数据。之前对静态DataFrame的各种操作同样也适用于流式DataFrame。
+
+</p><h3>创建DataFrame</h3><p>SparkSession.readStream()返回的DataStreamReader可以用于创建流DataFrame。它支持多种类型的数据流作为输入，比如文件、Kafka、socket等。
+
+```scala
+socketDataFrame = spark
+   .readStream
+   .format("socket"）
+   .option("host", "localhost")
+   .option("port", 9999)
+   .load()
+```
+
+流DataFrame同静态DataFrame一样，不仅支持类似SQL的查询操作（如select和where等），还支持RDD的转换操作（如map和filter）。 可以用DataFrame API去做类似于SQL的Query。
+
+```
+df = … // 这个DataFrame代表学校学生的数据流，schema是{name: string, age: number, height: number, grade: string}
+df.select("name").where("age > 10") // 返回年龄大于10岁的学生名字列表
+df.groupBy("grade").count() // 返回每个年级学生的人数
+df.sort_values([‘age’], ascending=False).head(100) //返回100个年龄最大的学生 
+```
+
+基于事件时间的时间窗口操作
+
+在学习Spark Streaming的时间窗口操作时，我们举过一个例子，是每隔10秒钟输出过去60秒的前十热点词。这个例子是基于处理时间而非事件时间的。
+
+```
+windowedCounts = words.groupBy(
+   window(words.timestamp, "1 minute","10 seconds"),
+   words.word
+).count()
+.sort(desc("count"))
+.limit(10)
+```
+
+输出结果流
+
+当经过各种SQL查询操作之后，我们创建好了代表最终结果的DataFrame。下一步就是开始对输入数据流的处理，并且持续输出结果。可以用Dataset.writeStream()返回的DataStreamWriter对象去输出结果。它支持多种写入位置，如硬盘文件、Kafka、console和内存等。
+
+```scala
+query = wordCounts
+   .writeStream
+   .outputMode("complete")
+   .format("csv")
+   .option("path", "path/to/destination/dir")
+   .start()
+query.awaitTermination()
+```
+
+在上面这个代码例子中，我们选择了完全模式，把输出结果流写入了CSV文件。
+
+### Structured Streaming与Spark Streaming对比
+
+接下来，让我们对比一下Structured Streaming和上一讲学过的Spark Streaming。看看同为流处理的组件的它们各有什么优缺点。
+
+- 简易度和性能，Spark Streaming提供的DStream API与RDD API很类似，相对比较低level。
+- 实时性，Spark Streaming是准实时的，它能做到的最小延迟在一秒左右。虽然Structured Streaming用的也是类似的微批处理思想，但是更像是实时处理，能做到用更小的时间间隔，最小延迟在100毫秒左右。而且在Spark 2.3版本中，Structured Streaming引入了连续处理的模式，可以做到真正的毫秒级延迟。
+- 对事件时间的支持
+
