@@ -6,7 +6,7 @@
       <paths name="hadoop_master">
         <serverdata>
           <mappings>
-            <mapping deploy="/spark-standalone/demojar" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/home/hadoop/app" local="$PROJECT_DIR$" web="/home/hadoop/app" />
           </mappings>
         </serverdata>
       </paths>

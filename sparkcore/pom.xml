@@ -41,6 +41,12 @@
             <artifactId>spark-core_${scala.binary.version}</artifactId>
             <version>${spark.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-yarn_2.12</artifactId>
+            <version>3.1.2</version>
+        </dependency>
         <!-- Apache Spark SQL -->
         <dependency>
             <groupId>org.apache.spark</groupId>

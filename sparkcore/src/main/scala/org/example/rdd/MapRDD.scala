@@ -5,7 +5,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 object MapRDD {
   def main(args: Array[String]): Unit = {
-    val sparkconf = new SparkConf().setMaster("local[*]").setAppName("maprdd")
+    val sparkconf = new SparkConf().setAppName("maprdd")
     val sc = new SparkContext(sparkconf)
     val seq = Seq[Int](1, 2, 3, 4)
     val rdd: RDD[Int] = sc.makeRDD(seq, 2)

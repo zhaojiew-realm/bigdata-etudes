@@ -29,6 +29,10 @@ juicefs format --storage s3 \
 ```bash
 # linux
 juicefs mount redis://:@mymain.ggqugq.ng.0001.cnn1.cache.amazonaws.com.cn:6379/1 ~/jfs
+```
+
+windows
+```shell
 # windows
 juicefs mount redis://:@mymain.ggqugq.ng.0001.cnn1.cache.amazonaws.com.cn:6379/1 Z:
 ```
