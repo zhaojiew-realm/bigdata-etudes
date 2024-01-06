@@ -42,3 +42,4 @@ venv
 data
 
 sync_node.sh
+metastore_db

@@ -35,7 +35,7 @@ object ComplexRDD {
     resultRDD.foreach(println)
 
     // wait and visit http://127.0.0.1:4040
-    Thread.sleep(1000*1800)
+//    Thread.sleep(1000*1800)
 
   }
 }

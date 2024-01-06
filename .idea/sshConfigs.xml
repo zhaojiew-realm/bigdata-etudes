@@ -2,7 +2,7 @@
 <project version="4">
   <component name="SshConfigs">
     <configs>
-      <sshConfig authType="PASSWORD" host="192.168.26.47" id="39428532-c1b6-4684-9b8f-f34a60be4eba" port="22" nameFormat="DESCRIPTIVE" username="hadoop" useOpenSSHConfig="true" />
+      <sshConfig host="ec2-54-223-103-30.cn-north-1.compute.amazonaws.com.cn" id="39428532-c1b6-4684-9b8f-f34a60be4eba" keyPath="$USER_HOME$/.ssh/cluster-key.pem" port="22" nameFormat="DESCRIPTIVE" username="hadoop" useOpenSSHConfig="true" />
     </configs>
   </component>
 </project>

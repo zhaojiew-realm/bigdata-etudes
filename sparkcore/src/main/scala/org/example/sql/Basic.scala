@@ -9,7 +9,7 @@ object Basic {
 
 
     // create spark runtime
-    val sparkConf = new SparkConf().setMaster("local[*]").setAppName("sql")
+    val sparkConf = new SparkConf().setAppName("sql")
     val spark = SparkSession.builder().config(sparkConf).getOrCreate()
 
     // run logical exec

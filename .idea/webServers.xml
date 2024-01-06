@@ -3,7 +3,14 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="d0535ec6-ae64-44a1-bb10-5e1d5581cdf4" name="hadoop_master">
-        <fileTransfer rootFolder="/home/hadoop" accessType="SFTP" host="192.168.26.47" port="22" sshConfigId="39428532-c1b6-4684-9b8f-f34a60be4eba" sshConfig="hadoop@192.168.26.47:22 password">
+        <fileTransfer rootFolder="/home/hadoop" accessType="SFTP" host="ec2-54-223-103-30.cn-north-1.compute.amazonaws.com.cn" port="22" sshConfigId="39428532-c1b6-4684-9b8f-f34a60be4eba" sshConfig="hadoop@ec2-54-223-103-30.cn-north-1.compute.amazonaws.com.cn:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="a0861629-ec13-4b4c-aa1d-743f4ec2e671" name="main">
+        <fileTransfer rootFolder="/home/ec2-user/tmp" accessType="SFTP" host="172.31.3.41" port="22" sshConfigId="0b84eb2a-403b-4969-b51e-2ab48a50b47d" sshConfig="main" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

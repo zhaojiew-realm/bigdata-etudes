@@ -17,7 +17,7 @@ public class WordCount {
         //创建配置获取job对象
         //Configuration类代表作业的配置，该类会加载mapred-site.xml、hdfs-site.xml、core-site.xml等配置文件
         Configuration conf = new Configuration();
-        conf.set("mapreduce.framework.name", "yarn");
+//        conf.set("mapreduce.framework.name", "yarn");
 
         Job job = Job.getInstance(conf,"wordcount");
 
@@ -37,8 +37,8 @@ public class WordCount {
         job.setOutputValueClass(IntWritable.class);
 
         //本地路径
-         FileInputFormat.setInputPaths(job, new Path("/data/input"));
-         FileOutputFormat.setOutputPath(job, new Path("/data/output"));
+         FileInputFormat.setInputPaths(job, new Path("data/input"));
+         FileOutputFormat.setOutputPath(job, new Path("data/output"));
         //打包jar集群路径
         // FileInputFormat.setInputPaths(job, new Path(args[0]));
         // FileOutputFormat.setOutputPath(job, new Path(args[1]));
